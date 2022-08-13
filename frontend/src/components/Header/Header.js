@@ -1,28 +1,27 @@
 import React from "react";
-import {
-  Container,
-  Nav,
-  Navbar,
-} from "react-bootstrap";
+import { Container, Nav, Navbar, Button } from "react-bootstrap";
+import { } from "react-router-dom";
 
 const Header = () => {
   return (
-    <Navbar bg="primary" expand="lg" variant="dark">
+    <Navbar collapseOnSelect bg="primary" expand="lg" variant="dark">
       <Container fluid>
-        <Navbar.Brand href="/" className="text-warning">Royal Resta</Navbar.Brand>
+        <Navbar.Brand className="text-warning" href="/">Royal Resta</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
 
-        <Navbar.Collapse id="navbarScroll">
-          <Nav className="m-auto">
-            <Nav.Link href="/">Inicio</Nav.Link>
-            <Nav.Link href="#">Información</Nav.Link>
-            <Nav.Link href="#">Ayuda</Nav.Link>
-          </Nav>
-          <Nav>
-            <Nav.Link as="button" className="btn btn-outline-warning" href="#">Perfil</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
+        <Navbar.Collapse>
 
+          <Nav className="m-auto">
+            <Nav.Link href='/'>Inicio</Nav.Link>
+            <Nav.Link href='/informacion'>Informacion</Nav.Link>
+            <Nav.Link href='/ayuda'>Ayuda</Nav.Link>
+          </Nav>
+
+          <Nav>
+            <Button className="btn btn-outline-warning" href='/perfil'>Perfil</Button>
+          </Nav>
+
+        </Navbar.Collapse>
       </Container>
     </Navbar>
   );

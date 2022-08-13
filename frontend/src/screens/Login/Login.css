@@ -1,0 +1,18 @@
+.login {
+    min-height: 93vh;
+    display: flex;
+    align-items: center;
+    background-image: url("../../../public/IMG/login/login-bg.jpg");
+    background-position: center;
+    background-size: cover;
+}
+
+.subtitle {
+    font-size: 15px;
+    padding-top: 10px;
+}
+
+.intro-text {
+    width: 100%;
+    text-align: center;
+}
