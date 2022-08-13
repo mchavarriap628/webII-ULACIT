@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Row, Card, Badge, Accordion } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
-import jsonTest from '../../data/jsonTest';
+import axios from 'axios';
 
 const Restaurantes = () => {
+
+    const [restaurantes, setRestaurantes] = useState([]);
 
     const deleteHandler = (id) => {
         if (window.confirm("¿Está seguro de eliminar el restaurante?")) {
         }
     };
+
+    const fetchRestaurantes = async () => {
+        const { data } = await axios.get('/api/restaurantes');
+        setRestaurantes(data);
+    }
+
+    console.log(restaurantes);
+
+    useEffect(() => {
+        fetchRestaurantes();
+    }, [])
 
 
     return (
@@ -27,9 +40,9 @@ const Restaurantes = () => {
             <Row className='mt-5'>
 
                 {
-                    jsonTest.map(restaurantes => (
+                    restaurantes.map(restaurantes => (
 
-                        <Accordion defaultActiveKey="0">
+                        <Accordion key={restaurantes._id}>
                             <Card style={{ margin: 10 }} bg="light">
                                 <Card.Header style={{ display: "flex" }}>
                                     <span
@@ -41,7 +54,7 @@ const Restaurantes = () => {
                                             alignSelf: "center",
                                             fontSize: 18,
                                         }}>
-                                        <Accordion.Header as={Card.Text} variant='link' eventKey='0'>{restaurantes.title}</Accordion.Header>
+                                        <Accordion.Header as={Card.Text} variant='link' eventkey='0'>{restaurantes.title}</Accordion.Header>
                                     </span>
                                     <div>
                                         <Button href={`/admin/restaurantes/${restaurantes._id}`} variant="primary" className='text-warning rounded'>Editar</Button>
@@ -53,7 +66,7 @@ const Restaurantes = () => {
                                     </div>
                                 </Card.Header>
 
-                                <Accordion.Body eventKey='0'>
+                                <Accordion.Body eventkey='0'>
                                     <Card.Body>
                                         <h4>
                                             <Badge bg="warning" text="primary" pill style={{ fontSize: 10 }}>ID - {restaurantes._id}</Badge>

@@ -1,8 +1,40 @@
-import React from 'react';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { Button, Card, Col, Container, Row, Form } from 'react-bootstrap';
 import './Login.css';
 
 const Login = () => {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
+
+    const submitHandler = async (e) => {
+        e.preventDefault();
+        //console.log(email, password);
+        try {
+            const config = {
+                headers: {
+                    "Content-type": "application/json"
+                }
+            }
+            setLoading(true);
+            const { data } = await axios.post('/api/users/login', {
+                email,
+                password,
+            },
+                config
+            );
+
+            console.log(data);
+            localStorage.setItem('userInfo', JSON.stringify(data))
+            setLoading(false);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
     return (
         <div className='login'>
             <Container>
@@ -14,18 +46,31 @@ const Login = () => {
                             <div className='d-flex justify-content-center  text-warning mt-2'><Card.Img variant="top" src="/img/login/user-icon.png" alt="user-icon" style={{ width: '150px', height: '150px' }} /></div>
                             <Card.Body>
                                 <Card.Title className='d-flex justify-content-center text-white'><hr /></Card.Title>
+
                                 <Card.Text>
+                                    <Form onSubmit={submitHandler}>
+                                        <Form.Group controlId="formBasicEmail">
+                                            <Form.Control className='rounded' type="email"
+                                                placeholder="Enter email"
+                                                value={email}
+                                                onChange={(e) => setEmail(e.target.value)}
+                                            />
+                                        </Form.Group>
 
-                                    <div className='mx-2'>
-                                        <input className='form-control d-flex justify-content-center text-white mb-3' type="text" id="fEmail" placeholder="Ingrese su email" />
-                                        <input className='form-control d-flex justify-content-center text-white mb-3' type="password" id="fPassword" placeholder="Ingrese su contraseña" />
-                                    </div>
+                                        <Form.Group controlId="formBasicPassword" className='mt-3'>
+                                            <Form.Control className='rounded' type="password"
+                                                placeholder="Password"
+                                                value={password}
+                                                onChange={(e) => setPassword(e.target.value)}
+                                            />
+                                        </Form.Group>
 
-                                    <div className='d-flex justify-content-center text-white'>
-                                        <Button className='d-flex justify-content-center btn btn-warning text-black'>Iniciar Sesión</Button>
-                                    </div>
-
+                                        <span className='mt-4 d-flex justify-content-center'>
+                                            <Button className='btn btn-warning text-black' type="submit">Iniciar Sesión</Button>
+                                        </span>
+                                    </Form>
                                 </Card.Text>
+
                             </Card.Body>
                         </Card>
 

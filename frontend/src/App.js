@@ -10,6 +10,7 @@ import Login from "./screens/Login/Login";
 import Perfil from "./screens/Perfil/Perfil";
 import Restaurantes from "./screens/Admin/Restaurantes";
 import Admin from "./screens/Admin/Admin";
+import RegistrarEmpleado from "./screens/RegistrarEmpleado/RegistrarEmpleado";
 
 const App = () => (
   <BrowserRouter>
@@ -24,6 +25,7 @@ const App = () => (
 
       <Route path='/admin' component={() => <Admin />} exact />
       <Route path='/admin/restaurantes' component={() => <Restaurantes />} exact />
+      <Route path='/admin/registrarEmpleado' component={() => <RegistrarEmpleado />} exact />
 
     </main>
     <Footer />
