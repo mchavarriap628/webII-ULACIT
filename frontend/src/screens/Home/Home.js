@@ -2,7 +2,13 @@ import React from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import './Home.css';
 
-function Home() {
+const Home = () => {
+
+    /*useEffect(() => {
+        const userInfo = localStorage.getItem("userInfo");
+        if (userInfo) { history.push("/perfil"); }
+    }, [history]);*/
+
     return (
         <div className='main'>
             <Container>
