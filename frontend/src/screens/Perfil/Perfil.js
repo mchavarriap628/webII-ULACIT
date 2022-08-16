@@ -18,8 +18,13 @@ const Perfil = () => {
                     </a>
                 </Col>
                 <Col>
-                    <Button variant='danger' className="text-white rounded">
-                        Cerrar Sesión
+                    <Button
+                        variant='danger'
+                        className="text-white rounded"
+                        href='/'
+                        onClick={() => {
+                            localStorage.removeItem("userInfo");
+                        }}>Cerrar Sesión
                     </Button>
                 </Col>
             </Row>

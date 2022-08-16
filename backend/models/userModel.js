@@ -20,6 +20,18 @@ const userSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        salario: {
+            type: String,
+            required: true,
+        },
+        restaurante: {
+            type: String,
+            required: true,
+        },
+        estado: {
+            type: String,
+            required: true,
+        },
         isAdmin: {
             type: Boolean,
             required: true,

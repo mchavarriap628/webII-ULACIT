@@ -5,12 +5,12 @@ const generateToken = require("../utils/generateToken");
 
 /*-------------------------- Registro Usuarios ------------------------------*/
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password, rol } = req.body;
+    const { name, email, password, rol, salario, restaurante, estado } = req.body;
 
     const userExists = await User.findOne({ email });
     if (userExists) {
         res.status(400);
-        throw new Error("User already exists!");
+        throw new Error("¡Un usuario con este correo ya existe!");
     }
 
     const user = await User.create({
@@ -18,6 +18,9 @@ const registerUser = asyncHandler(async (req, res) => {
         email,
         password,
         rol,
+        salario,
+        restaurante,
+        estado,
     });
 
     if (user) {
@@ -27,6 +30,9 @@ const registerUser = asyncHandler(async (req, res) => {
             email: user.email,
             isAdmin: user.isAdmin,
             rol: user.rol,
+            salario: user.salario,
+            restaurante: user.restaurante,
+            estado: user.estado,
             token: generateToken(user._id),
         });
     } else {
@@ -51,7 +57,7 @@ const authUser = asyncHandler(async (req, res) => {
         })
     } else {
         res.status(400);
-        throw new Error("Invalid Email or Password!")
+        throw new Error("¡El correo o la contraseña son invalidos!");
     }
 
 });
