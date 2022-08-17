@@ -72,10 +72,10 @@ const AgregarUsuario = () => {
                             </Form.Group>
 
                             <Form.Group controlId="email" className='mb-4'>
-                                <Form.Label>Correo electronico</Form.Label>
+                                <Form.Label>Correo electrónico</Form.Label>
                                 <Form.Control required
                                     type="email"
-                                    placeholder="Ingrese el email"
+                                    placeholder="ejemplo@royalresta.com"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
