@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Row, Card, Badge, Accordion } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
 import axios from 'axios';
@@ -29,7 +29,7 @@ const Restaurantes = () => {
 
             <Row>
                 <Col>
-                    <a href='/tareas'>
+                    <a href='/admin/agregarRestaurante'>
                         <Button variant='primary' className="rounded text-warning">
                             Agregar Restaurante +
                         </Button>
