@@ -33,23 +33,13 @@ const AgregarUsuario = () => {
                     config
                 );
                 console.log(data);
-                localStorage.setItem("userInfo", JSON.stringify(data));
+                //localStorage.setItem("userInfo", JSON.stringify(data));
+                window.location.replace("/admin/usuarios");
             } catch (error) {
                 setError(error.response.data.message);
             }
         }
 
-
-
-        /*console.log(
-            name + " " +
-            email + " " +
-            password + " " +
-            confirmPassword + " " +
-            rol + " " +
-            salario + " " +
-            restaurante + " " +
-            estado + " ");*/
     }
 
 
@@ -118,7 +108,7 @@ const AgregarUsuario = () => {
                                 <Form.Label>Restaurante asignado</Form.Label>
                                 <Form.Select required value={restaurante} onChange={e => setRestaurante(e.target.value)}>
                                     <option ></option>
-                                    <option >Prueba</option>
+                                    <option >Ninguno</option>
                                 </Form.Select>
                             </Form.Group>
 

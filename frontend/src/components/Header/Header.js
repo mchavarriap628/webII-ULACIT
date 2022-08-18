@@ -3,6 +3,14 @@ import { Container, Nav, Navbar, Button } from "react-bootstrap";
 import { } from "react-router-dom";
 
 const Header = () => {
+
+  const loggedUser = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+  let currentButtonState = true;
+  if (loggedUser) {
+    currentButtonState = false;
+  }
+
+
   return (
     <Navbar collapseOnSelect bg="primary" expand="lg" variant="dark">
       <Container fluid>
@@ -18,12 +26,12 @@ const Header = () => {
           </Nav>
 
           <Nav>
-            <Button className="btn btn-outline-warning" href='/perfil'>Perfil</Button>
+            <Button className="btn btn-outline-warning" href='/perfil' id="perfilBtn" disabled={currentButtonState}>Perfil</Button>
           </Nav>
 
         </Navbar.Collapse>
       </Container>
-    </Navbar>
+    </Navbar >
   );
 };
 
