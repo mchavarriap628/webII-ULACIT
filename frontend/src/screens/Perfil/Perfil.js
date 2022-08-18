@@ -1,27 +1,65 @@
 import React from 'react';
 import { Button, Col, Row, Card, Form } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
-//import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { logout } from '../../actions/userActions';
 
 
 const Perfil = () => {
+
+    const dispatch = useDispatch();
+    /*const userLogin = useSelector(state => state.userLogin)
+    const { userInfo } = userLogin;*/
+
+    const logoutHandler = () => {
+        dispatch(logout());
+        window.location.replace("/login");
+
+    }
+
+    const tareasHandler = () => {
+        const contenido = localStorage.getItem("userInfo")
+            ? JSON.parse(localStorage.getItem("userInfo"))
+            : null;
+        console.log(contenido.rol);
+        switch (contenido.rol) {
+            case 'Admin':
+                window.location.replace("/admin/tareas");
+                break;
+            case 'Gerente':
+                window.location.replace("/gerente/tareas");
+                break;
+            case 'Supervisor':
+                window.location.replace("/supervisor/tareas");
+                break;
+            case 'Empleado':
+                window.location.replace("/empleado/tareas");
+                break;
+            default:
+                window.location.replace("/login");
+                break;
+        }
+    }
 
     return (
         <MainScreen title='¡Bienvenido de vuelta!'>
 
             <Row>
                 <Col>
-                    <a href='/tareas'>
-                        <Button variant='primary' className="rounded text-warning mx-3">
-                            Mis Tareas
-                        </Button>
-                    </a>
+                    <Button
+                        variant='primary'
+                        className="rounded text-warning mx-3"
+                        onClick={() => {
+                            tareasHandler();
+                        }}>
+                        Mis Tareas
+                    </Button>
+
                     <Button
                         variant='danger'
                         className="text-white rounded"
-                        href='/'
                         onClick={() => {
-                            localStorage.removeItem("userInfo");
+                            logoutHandler();
                         }}>Cerrar Sesión
                     </Button>
                 </Col>

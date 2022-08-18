@@ -1,31 +1,32 @@
-import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Card, Col, Container, Row, Form } from 'react-bootstrap';
 import ErrorMessage from '../../components/ErrorMessage';
-//import Loading from '../../components/Loading';
 import './Login.css';
+import { useDispatch, useSelector } from 'react-redux'
+import { login } from '../../actions/userActions';
 
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    //const [loading, setLoading] = useState(false);
+
+    //Aquí cargamos el reducer userLogin
+    const dispatch = useDispatch();
+    const userLogin = useSelector((state) => state.userLogin);
+    const { error, userInfo } = userLogin;
+
+    useEffect(() => {
+        if (userInfo) {
+            window.location.replace("/perfil");
+        }
+    }, [userInfo]);
+
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        //console.log(email, password);
-        try {
-            const config = { headers: { "Content-type": "application/json" } };
-            //setLoading(true);
-            const { data } = await axios.post('/api/users/login', { email, password, }, config);
-            console.log(data);
-            localStorage.setItem('userInfo', JSON.stringify(data))
-            //setLoading(false); 
-        } catch (error) {
-            setError(error.response.data.message);
-        }
-    }
+        //Aquí llamamos el action Login detro de userAction
+        dispatch(login(email, password));
+    };
 
     return (
         <div className='login'>

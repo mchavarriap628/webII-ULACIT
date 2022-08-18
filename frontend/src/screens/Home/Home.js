@@ -9,6 +9,11 @@ const Home = () => {
         if (userInfo) { history.push("/perfil"); }
     }, [history]);*/
 
+    const loggedUser = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+    if (loggedUser) {
+        window.location.replace("/perfil");
+    }
+
     return (
         <div className='main'>
             <Container>
