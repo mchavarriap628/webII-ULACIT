@@ -1,11 +1,19 @@
 import React from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
+import { useParams } from "react-router-dom";
 
 const PasswordReset = () => {
+    const params = useParams();
+
+    console.log(params);
+    const submitHandler = async (e) => {
+    }
+
+
     return (
         <MainScreen title='Actualización de contraseña'>
-            <Form>
+            <Form onSubmit={submitHandler}>
                 <Row>
                     <Col>
                         <Form.Group controlId="passwordOld" className='mb-4'>

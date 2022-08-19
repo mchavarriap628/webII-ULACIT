@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Container, Row, Form, Button } from 'react-bootstrap'
 import ErrorMessage from '../../components/ErrorMessage';
 import MainScreen from '../../components/MainScreen/MainScreen'
@@ -18,6 +18,17 @@ const AgregarUsuario = () => {
 
     const [message, setMessage] = useState("");
     const [error, setError] = useState(false);
+
+    const [restaurantes, setRestaurantes] = useState([]);
+    /*Esto llena el SELECT de restaurantes*/
+    useEffect(() => {
+        const fillRestaurantes = async () => {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.get("/api/restaurantes/", config);
+            setRestaurantes(data);
+        }
+        fillRestaurantes();
+    });
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -109,6 +120,9 @@ const AgregarUsuario = () => {
                                 <Form.Select required value={restaurante} onChange={e => setRestaurante(e.target.value)}>
                                     <option ></option>
                                     <option >Ninguno</option>
+                                    {restaurantes?.map(restaurantes => (
+                                        <option key={restaurantes._id}>{restaurantes.nombreRestaurante}</option>
+                                    ))}
                                 </Form.Select>
                             </Form.Group>
 

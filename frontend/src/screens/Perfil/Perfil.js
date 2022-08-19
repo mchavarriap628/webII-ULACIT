@@ -8,20 +8,17 @@ import { logout } from '../../actions/userActions';
 const Perfil = () => {
 
     const dispatch = useDispatch();
-    /*const userLogin = useSelector(state => state.userLogin)
-    const { userInfo } = userLogin;*/
+
+    const contenido = localStorage.getItem("userInfo")
+        ? JSON.parse(localStorage.getItem("userInfo"))
+        : null;
 
     const logoutHandler = () => {
         dispatch(logout());
         window.location.replace("/login");
-
     }
 
     const tareasHandler = () => {
-        const contenido = localStorage.getItem("userInfo")
-            ? JSON.parse(localStorage.getItem("userInfo"))
-            : null;
-        console.log(contenido.rol);
         switch (contenido.rol) {
             case 'Admin':
                 window.location.replace("/admin/tareas");
@@ -66,8 +63,8 @@ const Perfil = () => {
             </Row>
 
             <Row className='mt-5'>
-
                 <Card style={{ margin: 10 }} bg="light">
+
                     <Card.Header style={{ display: "flex" }}>
                         <span
                             style={{
@@ -81,40 +78,41 @@ const Perfil = () => {
                             Información Personal
                         </span>
                         <div>
-                            <a href='/perfil/password'><Button variant="primary" className='text-warning rounded mx-3'>Actualizar contraseña</Button></a>
-                            <Button variant="primary" className='text-warning rounded'>Editar datos personales</Button>
+                            <a href={`/perfil/password/${contenido._id}`}>
+                                <Button variant="primary" className='text-warning rounded mx-3'>Actualizar contraseña
+                                </Button></a>
                         </div>
                     </Card.Header>
+
                     <Card.Body>
-                        <Form>
-                            <Row>
-                                <Col>
-                                    <Form.Group controlId="name" className='mb-4'>
-                                        <Form.Label>Mi nombre</Form.Label>
-                                        <Form.Control required type="text" disabled />
-                                    </Form.Group>
+                        <Row>
+                            <Col>
+                                <Form.Group controlId="name" className='mb-4'>
+                                    <Form.Label>Mi nombre</Form.Label>
+                                    <Form.Control required type="text"
+                                        value={contenido.name} disabled />
+                                </Form.Group>
 
-                                    <Form.Group controlId="restaurante" className='mb-4'>
-                                        <Form.Label>Restaurante en el que trabajo</Form.Label>
-                                        <Form.Control required type="text" disabled />
-                                    </Form.Group>
-                                </Col>
-                                <Col>
-                                    <Form.Group controlId="email" className='mb-4'>
-                                        <Form.Label>Mi correo</Form.Label>
-                                        <Form.Control required type="email" disabled />
-                                    </Form.Group>
+                                <Form.Group controlId="restaurante" className='mb-4'>
+                                    <Form.Label>Restaurante en el que trabajo</Form.Label>
+                                    <Form.Control required type="text"
+                                        value={contenido.restaurante} disabled />
+                                </Form.Group>
+                            </Col>
+                            <Col>
+                                <Form.Group controlId="email" className='mb-4'>
+                                    <Form.Label>Mi correo</Form.Label>
+                                    <Form.Control required type="email"
+                                        value={contenido.email} disabled />
+                                </Form.Group>
 
-                                    <Form.Group controlId="rol" className='mb-4'>
-                                        <Form.Label>Mi rol</Form.Label>
-                                        <Form.Control required type="text" disabled />
-                                    </Form.Group>
-                                </Col>
-                                <Button variant="primary" className="text-warning" type="submit" disabled>
-                                    Actualizar  datos
-                                </Button>
-                            </Row>
-                        </Form>
+                                <Form.Group controlId="rol" className='mb-4'>
+                                    <Form.Label>Mi rol</Form.Label>
+                                    <Form.Control required type="text"
+                                        value={contenido.rol} disabled />
+                                </Form.Group>
+                            </Col>
+                        </Row>
                     </Card.Body>
                 </Card>
 

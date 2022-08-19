@@ -11,6 +11,7 @@ import Login from "./screens/Login/Login";
 import Admin from "./screens/Admin/Admin";
 import Restaurantes from "./screens/Admin/Restaurantes";
 import AgregarRestaurantes from "./screens/Admin/AgregarRestaurantes";
+import Restaurante from "./screens/Admin/Restaurante";
 import Usuarios from "./screens/Admin/Usuarios";
 import AgregarUsuario from "./screens/Admin/AgregarUsuario";
 import ReportesAdmin from "./screens/Admin/Reportes";
@@ -22,6 +23,8 @@ import AdminTareas from "./screens/Admin/Tareas";
 import GerenteTareas from "./screens/Gerente/Tareas";
 import SupervisorTareas from "./screens/Supervisor/Tareas";
 import EmpleadoTareas from "./screens/Empleado/Tareas";
+import Usuario from "./screens/Admin/Usuario";
+
 
 const App = () => (
   <BrowserRouter>
@@ -33,7 +36,7 @@ const App = () => (
       <Route path='/login' component={() => <Login />} exact />
 
       <Route path='/perfil' component={() => <Perfil />} exact />
-      <Route path='/perfil/password' component={() => <PasswordReset />} exact />
+      <Route path='/perfil/password/:id' component={() => <PasswordReset />} exact />
 
       <Route path='/admin/tareas' component={() => <AdminTareas />} exact />
       <Route path='/gerente/tareas' component={() => <GerenteTareas />} exact />
@@ -44,8 +47,10 @@ const App = () => (
       <Route path='/admin' component={() => <Admin />} exact />
       <Route path='/admin/usuarios' component={() => <Usuarios />} exact />
       <Route path='/admin/agregarUsuario' component={() => <AgregarUsuario />} exact />
+      <Route path='/admin/usuario/:id' component={() => <Usuario />} exact />
       <Route path='/admin/restaurantes' component={() => <Restaurantes />} exact />
       <Route path='/admin/agregarRestaurante' component={() => <AgregarRestaurantes />} exact />
+      <Route path='/admin/restaurante/:id' component={() => <Restaurante />} exact />
       <Route path='/admin/reportes' component={() => <ReportesAdmin />} exact />
 
     </main>

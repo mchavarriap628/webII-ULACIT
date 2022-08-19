@@ -2,8 +2,6 @@ import {
     USER_LOGIN_FAIL,
     USER_LOGIN_LOGOUT,
     USER_LOGIN_SUCCESS,
-    USER_REGISTER_FAIL,
-    USER_REGISTER_SUCCESS
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -31,7 +29,7 @@ export const logout = () => async (dispatch) => {
     dispatch({ type: USER_LOGIN_LOGOUT })
 };
 
-//Esta función regista un usuario en mongodb, es llamada en AgregarUsuario.js
+/*Esta función regista un usuario en mongodb, es llamada en AgregarUsuario.js
 export const register = (name, email, password, rol, salario, restaurante, estado) => async (dispatch) => {
     try {
         const config = { headers: { "Content-type": "application/json" } };
@@ -52,4 +50,4 @@ export const register = (name, email, password, rol, salario, restaurante, estad
                     : error.message,
         });
     }
-};
+};*/
