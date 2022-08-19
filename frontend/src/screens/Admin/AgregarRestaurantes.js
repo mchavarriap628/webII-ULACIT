@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Form, Row, Button } from 'react-bootstrap'
 import MainScreen from '../../components/MainScreen/MainScreen'
 import axios from 'axios';
@@ -14,6 +14,20 @@ const AgregarRestaurantes = () => {
     const [telRestaurante, setTelRestaurante] = useState("");
 
     const [error, setError] = useState(false);
+
+    const [gerentes, setGerentes] = useState([]);
+
+    const fetching = async () => {
+        const config = { headers: { "Content-type": "application/json" } };
+        const { data } = await axios.get("/api/users/gerentes", config);
+        setGerentes(data);
+    }
+
+    useEffect(() => {
+        fetching();
+    }, [])
+
+    console.log(gerentes);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -34,7 +48,7 @@ const AgregarRestaurantes = () => {
     }
 
     return (
-        <MainScreen title="Admin - Agregar Restaurante">
+        <MainScreen title="Agregar Restaurante">
             <Form id="registerForm" onSubmit={submitHandler}>
                 <Row>
 
@@ -64,6 +78,9 @@ const AgregarRestaurantes = () => {
                             <Form.Select required value={gerenteAsignado} onChange={e => setGerenteAsignado(e.target.value)}>
                                 <option></option>
                                 <option>Ninguno</option>
+                                {gerentes?.map(gerentes => (
+                                    <option key={gerentes._id}>{gerentes.name}</option>
+                                ))}
                             </Form.Select>
                         </Form.Group>
 
@@ -101,6 +118,7 @@ const AgregarRestaurantes = () => {
                     </Button>
                 </Row>
             </Form>
+
         </MainScreen>
     )
 }

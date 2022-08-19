@@ -1,4 +1,4 @@
-import { USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_SUCCESS, USER_REGISTER_FAIL, USER_REGISTER_SUCCESS } from "../constants/userConstants";
+import { USER_LOGIN_FAIL, USER_LOGIN_LOGOUT, USER_LOGIN_SUCCESS } from "../constants/userConstants";
 
 //Reducer para login
 export const userLoginReducer = (state = {}, action) => {
@@ -15,7 +15,7 @@ export const userLoginReducer = (state = {}, action) => {
     }
 }
 
-//Reducer para registrar usuario nuevo
+/*Reducer para registrar usuario nuevo
 export const userRegisterReducer = (state = {}, action) => {
     switch (action.type) {
         case USER_REGISTER_SUCCESS:
@@ -25,4 +25,4 @@ export const userRegisterReducer = (state = {}, action) => {
         default:
             return state;
     }
-};
+};*/

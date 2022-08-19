@@ -66,4 +66,78 @@ const authUser = asyncHandler(async (req, res) => {
 
 });
 
-module.exports = { registerUser, authUser };
+/*-------------------------- Ver Usuarios ------------------------------*/
+const getUsuarios = asyncHandler(async (req, res) => {
+    const usuarios = await User.find();
+    res.json(usuarios);
+});
+
+
+/*-------------------------- Obtener a los gerentes de la DB ------------------------------*/
+const getGerentes = asyncHandler(async (req, res) => {
+    const gerentes = await User.find({ "rol": "Gerente" });
+
+    if (gerentes) {
+        res.json(gerentes);
+    } else {
+        res.status(400).json({ message: "Gerentes no encontrados" });
+    }
+
+});
+
+/*-------------------------- Ver un solo User por ID ------------------------------*/
+
+const getUserById = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+        res.json(user);
+    } else {
+        res.status(400).json({ message: "Usuario no encontrado" });
+    }
+});
+
+/*-------------------------- Actualizar User por ID ------------------------------*/
+
+const actualizarUser = asyncHandler(async (req, res) => {
+    const { name, email, salario, restaurante, rol, estado } = req.body;
+    const user = await User.findById(req.params.id);
+    if (user) {
+        user.name = name;
+        user.email = email;
+        user.salario = salario;
+        user.restaurante = restaurante;
+        user.rol = rol;
+        user.estado = estado;
+
+        const userActualizado = await user.save();
+        res.json(userActualizado);
+    } else {
+        res.status(404);
+        throw new Error("El usuario que desea actualizar no ha sido encontrado en la base de datos");
+    }
+});
+
+/*-------------------------- Eliminar User por ID ------------------------------*/
+
+const eliminarUser = asyncHandler(async (req, res) => {
+    /* const restaurante = await Restaurante.findById(req.params.id);
+     if (restaurante) {
+         await restaurante.remove();
+         res.json({ message: "El restaurante ha sido eliminado" });
+     } else {
+         res.status(404);
+         throw new Error("El restaurante que desea eliminar no ha sido encontrado en la base de datos");
+     }*/
+
+});
+
+module.exports = {
+    registerUser,
+    authUser,
+    getGerentes,
+    getUsuarios,
+    getUserById,
+    actualizarUser,
+    eliminarUser
+};
