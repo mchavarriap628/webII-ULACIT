@@ -45,20 +45,24 @@ const registerUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
 
+    //Revisa que el password que ponen coindica con el de la base de datos
     const user = await User.findOne({ email });
-    if (user && (await user.matchPassword(password))) {
+    if ((user && (await user.matchPassword(password))) && (user.estado !== "Inactivo")) {
         res.json({
             _id: user._id,
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
             rol: user.rol,
+            restaurante: user.restaurante,
+            estado: user.estado,
             token: generateToken(user._id),
         })
     } else {
         res.status(400);
-        throw new Error("¡El correo o la contraseña son invalidos!");
+        throw new Error("Credenciales invalidas");
     }
+
 
 });
 
