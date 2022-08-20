@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Row, Button, Table } from 'react-bootstrap';
+import { Row, Table } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
 const Reportes = () => {
 
