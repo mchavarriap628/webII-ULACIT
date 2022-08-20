@@ -121,14 +121,14 @@ const actualizarUser = asyncHandler(async (req, res) => {
 /*-------------------------- Eliminar User por ID ------------------------------*/
 
 const eliminarUser = asyncHandler(async (req, res) => {
-    /* const restaurante = await Restaurante.findById(req.params.id);
-     if (restaurante) {
-         await restaurante.remove();
-         res.json({ message: "El restaurante ha sido eliminado" });
-     } else {
-         res.status(404);
-         throw new Error("El restaurante que desea eliminar no ha sido encontrado en la base de datos");
-     }*/
+    const user = await User.findById(req.params.id);
+    if (user) {
+        await user.remove();
+        res.json({ message: "El usuario ha sido eliminado" });
+    } else {
+        res.status(404);
+        throw new Error("El usuario que desea eliminar no ha sido encontrado en la base de datos");
+    }
 
 });
 

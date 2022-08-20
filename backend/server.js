@@ -1,12 +1,14 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-//const jsonTest = require("./data/jsonTest");
 
 const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 const userRoutes = require("./routes/userRoutes");
 const restauranteRoutes = require("./routes/restauranteRoutes");
+const clientesRoutes = require("./routes/clientesRoutes");
+const productoRouters = require("./routes/productoRouters");
+const facturaRouters = require("./routes/facturaRouters");
 
 const app = express();
 dotenv.config();
@@ -22,6 +24,9 @@ app.get("/", (req, res) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/restaurantes', restauranteRoutes);
+app.use('/api/clientes', clientesRoutes);
+app.use('/api/productos', productoRouters);
+app.use('/api/facturas', facturaRouters);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -16,10 +16,15 @@ const Usuarios = () => {
         fetchUsuarios(usuarios);
     })
 
-    const deleteHandler = (id) => {
-        if (window.confirm("¿Está seguro de eliminar el usuarios?")) {
+    const deleteHandler = async (id) => {
+        if (window.confirm("¿Está seguro de eliminar el usuario seleccionado?")) {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.delete(`/api/users/${id}`, config);
+            console.log(data);
+            window.location.replace("/admin/usuarios");
         }
     };
+
     return (
 
         <MainScreen title='Usuarios totales'>
@@ -56,7 +61,7 @@ const Usuarios = () => {
                                 <td>{usuarios.rol}</td>
                                 <td>{usuarios.restaurante}</td>
                                 <td>{usuarios.salario}</td>
-                                <td className>
+                                <td>
                                     <Button href={`/admin/usuario/${usuarios._id}`}
                                         variant="primary" className='text-warning rounded'>Editar</Button>
                                     <Button variant="primary"
