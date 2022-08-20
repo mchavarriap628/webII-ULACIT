@@ -1,16 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Form, Row, Table } from 'react-bootstrap';
+import { Button, Col, Row, Table } from 'react-bootstrap';
 import MainScreen from '../../components/MainScreen/MainScreen';
 
 const Tareas = () => {
-
-    //Valores para el Query a FACTURA
-    const [facProducto, setFacProducto] = useState("");
-    const [precioUnit, setPrecioUnit] = useState(0);
-    const [cantidad, setCantidad] = useState(0);
-    const [precioTotal, setPrecioTotal] = useState(0);
-
 
     //Obtiene Clientes
     const [clientes, setClientes] = useState([]);
@@ -22,31 +15,6 @@ const Tareas = () => {
         }
         clientesSelect();
     });
-
-    //Obtiene Productos
-    const [productos, setProductos] = useState([]);
-    useEffect(() => {
-        const productosSelect = async () => {
-            const config = { headers: { "Content-type": "application/json" } };
-            const { data } = await axios.get("/api/productos/", config);
-            setProductos(data);
-        }
-        productosSelect();
-    });
-
-    //Submit producto a factura
-    const submitProducto = async (e) => {
-        e.preventDefault();
-        try {
-            const config = { headers: { "Content-type": "application/json" } };
-            const { data } = await axios.post("/api/factura",
-                { facProducto, precioUnit, cantidad, precioTotal }, config);
-
-        } catch (error) {
-
-        }
-    }
-
 
     return (
         <MainScreen title="clientes y facturacion">
