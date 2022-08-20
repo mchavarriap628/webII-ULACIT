@@ -2,16 +2,24 @@ const mongoose = require('mongoose');
 
 const facturaSchema = mongoose.Schema(
     {
-        facProducto: {
+        clienteNombre: {
             type: String,
             required: true,
         },
-        precioUnit: {
-            type: Number,
+        restauranteNombre: {
+            type: String,
+            required: true,
+        },
+        productoNombre: {
+            type: String,
+            required: true,
         },
         cantidad: {
             type: Number,
             required: true,
+        },
+        precioUnit: {
+            type: Number,
         },
         precioTotal: {
             type: Number,

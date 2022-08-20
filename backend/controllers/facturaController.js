@@ -9,18 +9,20 @@ const getFactura = asyncHandler(async (req, res) => {
 
 /*-------------------------- Registrar Factura ------------------------------*/
 const addFactura = asyncHandler(async (req, res) => {
-    const { facProducto, precioUnit, cantidad, precioTotal } = req.body;
+    const { clienteNombre, restauranteNombre, productoNombre, cantidad, precioUnit, precioTotal } = req.body;
 
     const factura = await Factura.create({
-        facProducto, precioUnit, cantidad, precioTotal
+        clienteNombre, restauranteNombre, productoNombre, cantidad, precioUnit, precioTotal
     });
 
     if (factura) {
         res.status(201).json({
             _id: factura._id,
-            facProducto: factura.facProducto,
-            precioUnit: factura.precioUnit,
+            clienteNombre: factura.clienteNombre,
+            restauranteNombre: factura.restauranteNombre,
+            productoNombre: factura.productoNombre,
             cantidad: factura.cantidad,
+            precioUnit: factura.precioUnit,
             precioTotal: factura.precioTotal
         });
     } else {
@@ -34,7 +36,7 @@ const addFactura = asyncHandler(async (req, res) => {
 const eliminarFactura = asyncHandler(async (req, res) => {
     const factura = await Factura.find();
     if (factura) {
-        await Factura.remove();
+        await factura.remove();
         res.json({ message: "Factura eliminada" });
     } else {
         res.status(404);

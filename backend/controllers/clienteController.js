@@ -36,5 +36,17 @@ const addCliente = asyncHandler(async (req, res) => {
     }
 });
 
+/*-------------------------- Ver un solo User por ID ------------------------------*/
 
-module.exports = { getClientes, addCliente };
+const getClienteById = asyncHandler(async (req, res) => {
+    const cliente = await Cliente.findById(req.params.id);
+
+    if (cliente) {
+        res.json(cliente);
+    } else {
+        res.status(400).json({ message: "Cliente no encontrado" });
+    }
+});
+
+
+module.exports = { getClientes, addCliente, getClienteById };
