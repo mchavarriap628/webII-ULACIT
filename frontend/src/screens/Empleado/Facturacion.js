@@ -41,7 +41,7 @@ const Facturacion = () => {
         }
         clienteQuery();
         setRestauranteNombre(perfil.restaurante);
-    }, [params.id]);
+    }, [params.id, perfil.restaurante]);
 
 
     //Calculo de total
