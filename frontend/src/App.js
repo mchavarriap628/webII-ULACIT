@@ -25,6 +25,12 @@ import SupervisorTareas from "./screens/Supervisor/Tareas";
 import EmpleadoTareas from "./screens/Empleado/Tareas";
 import Usuario from "./screens/Admin/Usuario";
 
+import AgregarEmpleado from "./screens/Gerente/AgregarEmpleado";
+import EmpleadosRestaurante from "./screens/Gerente/EmpleadosRestaurante";
+import ModificarUsuario from "./screens/Gerente/ModificarUsuario";
+import Cliente from "./screens/Empleado/Cliente";
+import Facturacion from "./screens/Empleado/Facturacion";
+
 
 const App = () => (
   <BrowserRouter>
@@ -52,6 +58,13 @@ const App = () => (
       <Route path='/admin/agregarRestaurante' component={() => <AgregarRestaurantes />} exact />
       <Route path='/admin/restaurante/:id' component={() => <Restaurante />} exact />
       <Route path='/admin/reportes' component={() => <ReportesAdmin />} exact />
+
+      <Route path='/gerente/contrato/:id' component={() => <AgregarEmpleado />} exact />
+      <Route path='/gerente/empleados/:id' component={() => <EmpleadosRestaurante />} exact />
+      <Route path='/gerente/modificar/:id' component={() => <ModificarUsuario />} exact />
+
+      <Route path='/empleado/cliente/' component={() => <Cliente />} exact />
+      <Route path='/empleado/facturacion/:id' component={() => <Facturacion />} exact />
 
     </main>
     <Footer />

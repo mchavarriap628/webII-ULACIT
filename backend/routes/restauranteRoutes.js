@@ -15,4 +15,5 @@ router.route('/create').post(registerRestaurante);
 //Ruta para ver, editar y eliminar un solo restaurante
 router.route('/:id').get(getRestauranteById).put(actualizarRestaurante).delete(eliminarRestaurante);
 
+
 module.exports = router;

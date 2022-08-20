@@ -93,4 +93,12 @@ const eliminarRestaurante = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { registerRestaurante, getRestaurantes, getRestauranteById, actualizarRestaurante, eliminarRestaurante };
+
+
+module.exports = {
+    registerRestaurante,
+    getRestaurantes,
+    getRestauranteById,
+    actualizarRestaurante,
+    eliminarRestaurante
+};
