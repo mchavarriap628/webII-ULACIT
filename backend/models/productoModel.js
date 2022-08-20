@@ -7,7 +7,15 @@ const productoSchema = mongoose.Schema(
             required: true,
             unique: true,
         },
-        prodPrecio: {
+        paraVenta: {
+            type: Boolean,
+            default: false,
+        },
+        categoria: {
+            type: String,
+            required: true,
+        },
+        precio: {
             type: Number,
             required: true,
         },

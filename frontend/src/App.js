@@ -14,6 +14,7 @@ import AgregarRestaurantes from "./screens/Admin/AgregarRestaurantes";
 import Restaurante from "./screens/Admin/Restaurante";
 import Usuarios from "./screens/Admin/Usuarios";
 import AgregarUsuario from "./screens/Admin/AgregarUsuario";
+import Usuario from "./screens/Admin/Usuario";
 import ReportesAdmin from "./screens/Admin/Reportes";
 
 import Perfil from "./screens/Perfil/Perfil";
@@ -23,13 +24,17 @@ import AdminTareas from "./screens/Admin/Tareas";
 import GerenteTareas from "./screens/Gerente/Tareas";
 import SupervisorTareas from "./screens/Supervisor/Tareas";
 import EmpleadoTareas from "./screens/Empleado/Tareas";
-import Usuario from "./screens/Admin/Usuario";
 
 import AgregarEmpleado from "./screens/Gerente/AgregarEmpleado";
 import EmpleadosRestaurante from "./screens/Gerente/EmpleadosRestaurante";
 import ModificarUsuario from "./screens/Gerente/ModificarUsuario";
+
 import Cliente from "./screens/Empleado/Cliente";
 import Facturacion from "./screens/Empleado/Facturacion";
+
+import ReportesSupervisor from "./screens/Supervisor/Reportes";
+import Proveedores from "./screens/Supervisor/Proveedores";
+import Productos from "./screens/Supervisor/Productos";
 
 
 const App = () => (
@@ -65,6 +70,10 @@ const App = () => (
 
       <Route path='/empleado/cliente/' component={() => <Cliente />} exact />
       <Route path='/empleado/facturacion/:id' component={() => <Facturacion />} exact />
+
+      <Route path='/supervisor/proveedores' component={() => < Proveedores />} exact />
+      <Route path='/supervisor/productos' component={() => < Productos />} exact />
+      <Route path='/supervisor/reportes' component={() => < ReportesSupervisor />} exact />
 
     </main>
     <Footer />
