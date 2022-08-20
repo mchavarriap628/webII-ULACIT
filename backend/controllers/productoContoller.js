@@ -9,7 +9,7 @@ const getProductos = asyncHandler(async (req, res) => {
 
 /*-------------------------- Registrar Profucto ------------------------------*/
 const addProducto = asyncHandler(async (req, res) => {
-    const { prodNombre, prodPrecio } = req.body;
+    const { prodNombre, categoria, precio } = req.body;
 
     const productoExiste = await Producto.findOne({ prodNombre });
     if (productoExiste) {
@@ -19,14 +19,16 @@ const addProducto = asyncHandler(async (req, res) => {
 
     const producto = await Producto.create({
         prodNombre,
-        prodPrecio
+        categoria,
+        precio
     });
 
     if (producto) {
         res.status(201).json({
             _id: producto._id,
             prodNombre: producto.prodNombre,
-            prodPrecio: producto.prodPrecio
+            categoria: producto.categoria,
+            precio: producto.precio,
         });
     } else {
         res.status(400);
