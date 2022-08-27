@@ -16,6 +16,7 @@ import Usuarios from "./screens/Admin/Usuarios";
 import AgregarUsuario from "./screens/Admin/AgregarUsuario";
 import Usuario from "./screens/Admin/Usuario";
 import ReportesAdmin from "./screens/Admin/Reportes";
+import Bitacora from "./screens/Admin/Bitacora";
 
 import Perfil from "./screens/Perfil/Perfil";
 import PasswordReset from "./screens/Perfil/PasswordReset";
@@ -35,7 +36,6 @@ import Facturacion from "./screens/Empleado/Facturacion";
 import ReportesSupervisor from "./screens/Supervisor/Reportes";
 import Proveedores from "./screens/Supervisor/Proveedores";
 import Productos from "./screens/Supervisor/Productos";
-
 
 const App = () => (
   <BrowserRouter>
@@ -63,6 +63,7 @@ const App = () => (
       <Route path='/admin/agregarRestaurante' component={() => <AgregarRestaurantes />} exact />
       <Route path='/admin/restaurante/:id' component={() => <Restaurante />} exact />
       <Route path='/admin/reportes' component={() => <ReportesAdmin />} exact />
+      <Route path='/admin/reportes/bitacora' component={() => <Bitacora />} exact />
 
       <Route path='/gerente/contrato/:id' component={() => <AgregarEmpleado />} exact />
       <Route path='/gerente/empleados/:id' component={() => <EmpleadosRestaurante />} exact />

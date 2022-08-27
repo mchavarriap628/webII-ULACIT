@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 const ModificarUsuario = () => {
     const params = useParams();
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -28,6 +29,21 @@ const ModificarUsuario = () => {
         fillRestaurantes();
     });
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
     //Esto carga el formulario con el objeto escogido que pasa su id a esta página
     useEffect(() => {
         const fetching = async () => {
@@ -40,11 +56,14 @@ const ModificarUsuario = () => {
             setRestaurante(data.restaurante);
         }
         fetching();
-    }, [params.id]);
+        setActor(contenido.name);
+        setAccion("Modificó un empleado:: " + name);
+    }, [params.id, contenido.name, name]);
 
     //Esto actualiza el objeto escogido que pasa su id a esta página
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.put(`/api/users/${params.id}`,

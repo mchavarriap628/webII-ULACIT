@@ -5,6 +5,22 @@ import MainScreen from '../../components/MainScreen/MainScreen';
 import ErrorMessage from '../../components/ErrorMessage';
 
 const Cliente = () => {
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
 
     //Para que funciona la lista
     const [clientes, setClientes] = useState([]);
@@ -14,6 +30,8 @@ const Cliente = () => {
             setClientes(data);
         }
         fetchClientes();
+        setActor(contenido.name);
+        setAccion("Agregó un cliente:: " + email);
     })
 
     //Para que funcione el form
@@ -27,6 +45,7 @@ const Cliente = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         setMessage(null);
         try {
             const config = { headers: { "Content-type": "application/json" } };

@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 
 const Restaurante = () => {
     const params = useParams();
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const [nombreRestaurante, setNombreRestaurante] = useState("");
     const [direccionFisica, setDireccionFisica] = useState("");
     const [gerenteAsignado, setGerenteAsignado] = useState("");
@@ -18,6 +19,21 @@ const Restaurante = () => {
 
     const [error, setError] = useState(false);
     const [gerentes, setGerentes] = useState([]);
+
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
 
     /*Esto carga el formulario con el objeto escogido que pasa su id a esta página*/
     useEffect(() => {
@@ -30,7 +46,9 @@ const Restaurante = () => {
             setTelRestaurante(data.telRestaurante);
         }
         fetching();
-    }, [params.id]);
+        setActor(contenido.name);
+        setAccion("Editó un restaurante:: " + nombreRestaurante);
+    }, [params.id, contenido.name, nombreRestaurante]);
 
     /*Esto llena el SELECT de gerentes*/
     useEffect(() => {
@@ -46,6 +64,7 @@ const Restaurante = () => {
     /*Esto actualiza el objeto escogido que pasa su id a esta página*/
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.put(`/api/restaurantes/${params.id}`,

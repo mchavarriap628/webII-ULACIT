@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 
 const Usuario = () => {
     const params = useParams();
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -18,6 +19,21 @@ const Usuario = () => {
     const [error, setError] = useState(false);
     const [restaurantes, setRestaurantes] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
     /*Esto llena el SELECT de restaurantes*/
     useEffect(() => {
         const fillRestaurantes = async () => {
@@ -26,7 +42,9 @@ const Usuario = () => {
             setRestaurantes(data);
         }
         fillRestaurantes();
-    });
+        setActor(contenido.name);
+        setAccion("Editó un usuario:: " + name);
+    }, [contenido.name, name]);
 
     //Esto carga el formulario con el objeto escogido que pasa su id a esta página
     useEffect(() => {
@@ -45,6 +63,7 @@ const Usuario = () => {
     //Esto actualiza el objeto escogido que pasa su id a esta página
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.put(`/api/users/${params.id}`,

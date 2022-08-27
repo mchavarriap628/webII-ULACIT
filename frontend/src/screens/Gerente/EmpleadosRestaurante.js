@@ -6,10 +6,26 @@ import { useParams } from "react-router-dom";
 
 
 const EmpleadosRestaurante = () => {
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
 
     const params = useParams();
     const [usuarios, setUsuarios] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+        }
+    }
+
+    //Trae los usuarios de la DB
     const fetchUsuarios = async () => {
         const { data } = await axios.get('/api/users/');
         for (var i = 0; i < data.length; i++) {
@@ -21,13 +37,17 @@ const EmpleadosRestaurante = () => {
     }
 
 
-
+    //Lista los usuarios de la DB
     useEffect(() => {
-        fetchUsuarios(usuarios);
-    })
+        fetchUsuarios();
+        setActor(contenido.name);
+        setAccion("Despidió o eliminó un usuario");
+    }, [contenido.name, usuarios]);
 
+    //Elimina un usuario
     const deleteHandler = async (id) => {
         if (window.confirm("¿Está seguro de eliminar el usuario seleccionado?")) {
+            registrarLog();
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.delete(`/api/users/${id}`, config);
             console.log(data);

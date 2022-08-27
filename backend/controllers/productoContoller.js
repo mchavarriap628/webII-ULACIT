@@ -7,7 +7,7 @@ const getProductos = asyncHandler(async (req, res) => {
     res.json(producto);
 });
 
-/*-------------------------- Registrar Profucto ------------------------------*/
+/*-------------------------- Registrar Producto ------------------------------*/
 const addProducto = asyncHandler(async (req, res) => {
     const { prodNombre, categoria, precio } = req.body;
 
