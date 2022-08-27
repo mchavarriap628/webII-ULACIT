@@ -7,16 +7,38 @@ import ErrorMessage from '../../components/ErrorMessage';
 
 const AgregarRestaurantes = () => {
 
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+
     const [nombreRestaurante, setNombreRestaurante] = useState("");
     const [direccionFisica, setDireccionFisica] = useState("");
     const [gerenteAsignado, setGerenteAsignado] = useState("");
     const [emailRestaurante, setEmailRestaurante] = useState("");
     const [telRestaurante, setTelRestaurante] = useState("");
 
+
+
     const [error, setError] = useState(false);
 
     const [gerentes, setGerentes] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
+
+
+    //Fetching de los select con los gerentes de la base de datos
     const fetching = async () => {
         const config = { headers: { "Content-type": "application/json" } };
         const { data } = await axios.get("/api/users/gerentes", config);
@@ -25,12 +47,14 @@ const AgregarRestaurantes = () => {
 
     useEffect(() => {
         fetching();
-    }, [])
+        setActor(contenido.name);
+        setAccion("Creó un restaurante:: " + nombreRestaurante);
+    }, [contenido.name, nombreRestaurante]);
 
-    console.log(gerentes);
-
+    //insersicón del restaurante en la base de datos
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.post(
@@ -39,7 +63,6 @@ const AgregarRestaurantes = () => {
                 config
             );
             console.log(data);
-            //localStorage.setItem("userInfo", JSON.stringify(data));
             window.location.replace("/admin/restaurantes");
         } catch (error) {
             setError(error.response.data.message);

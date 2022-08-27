@@ -11,6 +11,21 @@ const Productos = () => {
     const [categoria, setCategoria] = useState("");
     const [precio, setPrecio] = useState("");
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+        }
+    }
+
+
     //Obtiene productos de la base de datos
     const [Productos, setProductos] = useState([]);
     useEffect(() => {
@@ -19,11 +34,14 @@ const Productos = () => {
             setProductos(data);
         }
         tablaQuery();
-    });
+        setActor(perfil.name);
+        setAccion("Agregó un item al inventario:: " + prodNombre);
+    }, [perfil.name, prodNombre]);
 
     //Submit 
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.post("/api/productos/add",

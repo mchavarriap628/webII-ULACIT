@@ -19,6 +19,20 @@ const Facturacion = () => {
 
     const [facturas, setFacturas] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+        }
+    }
+
     //Optiene los reportes del restaurante para el que trabaja el empleado
     useEffect(() => {
         const tablaQuery = async () => {
@@ -31,7 +45,9 @@ const Facturacion = () => {
             setFacturas(data);
         }
         tablaQuery();
-    });
+        setActor(perfil.name);
+        setAccion("Le facturó a:: " + clienteNombre);
+    }, [perfil.nombre, clienteNombre]);
 
     //Optiene el nombre del cliente utilizando el id y el nombre del restaurante para el que trabaja el empleado
     useEffect(() => {
@@ -62,6 +78,7 @@ const Facturacion = () => {
     //Inserción en FACTURAS
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         try {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.post("/api/facturas/add",

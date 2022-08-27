@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 
 
 const AgregarEmpleado = () => {
-
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const params = useParams();
 
     const [name, setName] = useState("");
@@ -23,6 +23,21 @@ const AgregarEmpleado = () => {
     const [message, setMessage] = useState("");
     const [error, setError] = useState(false);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+            setError(error.response.data.message);
+        }
+    }
+
     /*Esto llena el SELECT de restaurantes*/
     useEffect(() => {
         const valoresIniciales = async () => {
@@ -32,10 +47,14 @@ const AgregarEmpleado = () => {
             setRol("Empleado");
         }
         valoresIniciales();
-    });
+        setActor(contenido.name);
+        setAccion("Contrató a:: " + name + " - para:: " + restaurante);
+    }, [contenido.name, name, restaurante, params.id]);
 
+    //Inserción  en la DB
     const submitHandler = async (e) => {
         e.preventDefault();
+        registrarLog();
         if (password !== confirmPassword) {
             setMessage('Las contraseñas no coinciden');
         } else {

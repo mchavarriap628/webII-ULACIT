@@ -5,19 +5,39 @@ import axios from 'axios';
 
 const Restaurantes = () => {
 
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const [restaurantes, setRestaurantes] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+        }
+    }
+
+    //Trae los restaurantes de la base de datos
     const fetchRestaurantes = async () => {
         const { data } = await axios.get('/api/restaurantes/');
         setRestaurantes(data);
     }
 
+    //Use Effect para cargar datos
     useEffect(() => {
         fetchRestaurantes();
-    }, [])
+        setActor(contenido.name);
+        setAccion("Eliminó un restaurante");
+    }, [contenido.name])
 
     const deleteHandler = async (id) => {
         if (window.confirm("¿Está seguro de eliminar el restaurante seleccionado?")) {
+            registrarLog();
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.delete(`/api/restaurantes/${id}`, config);
             console.log(data);

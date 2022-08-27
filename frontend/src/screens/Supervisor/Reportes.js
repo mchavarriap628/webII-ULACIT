@@ -6,20 +6,27 @@ import MainScreen from '../../components/MainScreen/MainScreen';
 const Reportes = () => {
     const perfil = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const [facturas, setFacturas] = useState([]);
+    const [total, setTotal] = useState(0);
 
     //Optiene todos los reportes todos los restaurantes
     useEffect(() => {
         const tablaQuery = async () => {
+            var aux = 0;
             const { data } = await axios.get("/api/facturas/");
             for (var i = 0; i < data.length; i++) {
                 if (perfil.restaurante !== data[i].restauranteNombre) {
                     delete data[i];
+                } else {
+                    aux = aux + data[i].precioTotal;
                 }
+
             }
             setFacturas(data);
+            setTotal(aux);
         }
         tablaQuery();
     });
+
 
     return (
         <MainScreen title="Reportes de Ventas">
@@ -51,6 +58,9 @@ const Reportes = () => {
                         ))}
                     </tbody>
                 </Table>
+
+                <h3 className='mt-3 p-2 bg-primary text-warning'>Total de Caja: ₡{total}</h3>
+
             </Row>
         </MainScreen>
     )

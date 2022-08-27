@@ -4,19 +4,38 @@ import MainScreen from '../../components/MainScreen/MainScreen';
 import axios from 'axios';
 
 const Usuarios = () => {
-
+    const contenido = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
     const [usuarios, setUsuarios] = useState([]);
 
+    /*Inserción del registro en la base de datos*/
+    const [actor, setActor] = useState("");
+    const [accion, setAccion] = useState("");
+    const registrarLog = async () => {
+        try {
+            const config = { headers: { "Content-type": "application/json" } };
+            const { data } = await axios.post(
+                "/api/logs/add", { actor, accion }, config
+            );
+            console.log(data);
+        } catch (error) {
+        }
+    }
+
+    //Traer los usuarios de la DB
     const fetchUsuarios = async () => {
         const { data } = await axios.get('/api/users/');
         setUsuarios(data);
     }
 
+    //Carga los usuarios
     useEffect(() => {
         fetchUsuarios(usuarios);
-    })
+        setActor(contenido.name);
+        setAccion("Eliminó un usuario");
+    }, [usuarios, contenido.name]);
 
     const deleteHandler = async (id) => {
+        registrarLog();
         if (window.confirm("¿Está seguro de eliminar el usuario seleccionado?")) {
             const config = { headers: { "Content-type": "application/json" } };
             const { data } = await axios.delete(`/api/users/${id}`, config);
